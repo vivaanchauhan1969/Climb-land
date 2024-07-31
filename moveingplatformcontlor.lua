@@ -89,3 +89,23 @@ function MovingPlatformController:move()
 	local checkpoint = self.checkpoints[nextCheckpointIndex]
 	local distance = (self.platform.Position - checkpoint.Position).Magnitude
 	local timeToNextCheckpoint = distance / self.alignPosition.MaxVelocity
+
+	self.alignPosition.Position = checkpoint.Position
+	self.alignOrientation.CFrame = checkpoint.CFrame
+	local delayTime = self.platformContainer:GetAttribute(Constants.MOVING_PLATFORM_DELAY_ATTRIBUTE)
+	self.moveTask = task.delay(timeToNextCheckpoint + delayTime, self.move, self)
+end
+
+function MovingPlatformController:stop() 
+	if self.moveTask then
+		task.cancel(self.moveTask)
+		self.moveTask = nil
+	end
+end
+
+function MovingPlatformController:destroy()
+	self:stop()
+	disconnectAndClear(self.connections)
+end
+
+return MovingPlatformController
