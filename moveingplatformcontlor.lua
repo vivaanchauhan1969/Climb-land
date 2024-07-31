@@ -49,3 +49,43 @@ function MovingPlatformController.new(platformContainer: Instance)
 	self:initialize()
 	return self
 end
+
+function MovingPlatformController:initialize()
+	table.insert(
+		self.connections,
+		self.platformContainer:GetAttributeChangedSignal(Constants.MOVING_PLATFORM_SPEED_ATTRIBUTE):Connect(function()
+			local speed = self.platformContainer:GetAttribute(Constants.MOVING_PLATFORM_SPEED_ATTRIBUTE)
+			self.alignPosition.MaxVelocity = speed
+		end)
+	)
+
+	table.insert(
+		self.connections,
+		self.platformContainer
+			:GetAttributeChangedSignal(Constants.MOVING_PLATFORM_ANGULAR_SPEED_ATTRIBUTE)
+			:Connect(function()
+				local angularSpeed =
+					self.platformContainer:GetAttribute(Constants.MOVING_PLATFORM_ANGULAR_SPEED_ATTRIBUTE)
+				self.alignOrientation.MaxAngularVelocity = angularSpeed
+			end)
+	)
+
+
+	visualizeCheckpointPath(self.checkpoints)
+
+	local checkpoint = self.checkpoints[self.checkpointIndex]
+	self.platform.CFrame = checkpoint.CFrame
+	self.alignPosition.Position = checkpoint.Position
+	self.alignOrientation.CFrame = checkpoint.CFrame
+end
+
+function MovingPlatformController:move()
+	local nextCheckpointIndex = self.checkpointIndex + 1
+	if nextCheckpointIndex > #self.checkpoints then
+		nextCheckpointIndex = 1
+	end
+	self.checkpointIndex = nextCheckpointIndex
+
+	local checkpoint = self.checkpoints[nextCheckpointIndex]
+	local distance = (self.platform.Position - checkpoint.Position).Magnitude
+	local timeToNextCheckpoint = distance / self.alignPosition.MaxVelocity
