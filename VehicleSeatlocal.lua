@@ -59,3 +59,48 @@ inputS.InputEnded:connect(function(input)
 		dn=false
 	end
 end)
+
+inputS.TouchEnded:Connect(function(object)
+	if object == Enum.KeyCode.DPadUp or seat.Throttle == 0 or seat.Throttle == -1 then
+		w=false
+	elseif object == Enum.KeyCode.DPadLeft or seat.Steer == 0 or seat.Steer == 1 then
+		a=false
+	elseif object == Enum.KeyCode.DPadDown or seat.Throttle == 0 or seat.Throttle == 1 then
+		s=false	
+	elseif object == Enum.KeyCode.DPadRight or seat.Steer == 0 or seat.Steer == -1 then
+		d=false		
+	end
+end)
+
+mouse.Move:connect(function() 
+	if not engine:FindFirstChild("BodyGyro") then
+		local gyro=engine.BodyGyro
+		gyro.cframe = mouse.Hit
+	end
+end)
+
+mouse.Button1Down:Connect(function()
+	firing:FireServer(true,mouse.Hit,mouse.Target)
+end)
+
+mouse.Button1Up:Connect(function()
+	firing:FireServer(false,mouse.Hit,mouse.Target)
+end)
+
+function rotorSpd(spd)
+	rotor1.TopParamA=-spd
+	rotor1.TopParamB=spd
+	rotor2.BottomParamA=-spd
+	rotor2.BottomParamB=spd
+end
+
+local chg=Vector3.new(0,0,0)
+local rot=0
+local inc=0
+while wait(.1) do
+	local lv=engine.CFrame.lookVector
+	local Vector = ControlModule:GetMoveVector()
+	print(Vector)
+	if Vector == Vector3.new(0, 0, 0) then
+		print("Idle")
+	end
