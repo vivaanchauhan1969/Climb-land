@@ -164,3 +164,18 @@ while wait(.1) do
 		if rot<math.pi/8 then
 			rot=rot+math.pi/20
 		end
+		gyro.cframe=mouse.Hit
+		gyro.cframe=gyro.cframe*CFrame.Angles(0,math.pi/5,rot)
+	elseif d then
+		if rot>-math.pi/8 then
+			rot=rot-math.pi/20
+		end
+		spd.velocity=chg+(engine.CFrame.lookVector-Vector3.new(0.5,0,0))*inc
+		gyro.cframe=mouse.Hit
+		gyro.cframe=gyro.cframe*CFrame.Angles(0,-math.pi/5,rot)
+	else
+		rot=0
+	end
+	
+	
+end
