@@ -104,3 +104,63 @@ while wait(.1) do
 	if Vector == Vector3.new(0, 0, 0) then
 		print("Idle")
 	end
+
+		if Vector.z >= -1 and Vector.z < 0 then
+		w=true
+	else
+		w=false
+	end
+	if Vector.z > 0 then
+		s=true
+	else
+		s=false
+	end
+	if Vector.x >= -1 and Vector.x < 0 then
+		a=true
+	else
+		a=false
+	end
+	if Vector.x > 0 then
+		d=true
+	else
+		d=false
+	end
+	if up then
+		rotorSpd(0.6)
+		if chg.y<30 then
+			chg=chg+Vector3.new(0,2,0)
+		end
+	elseif dn then
+		rotorSpd(0.2)
+		if chg.y>-30 then
+			chg=chg+Vector3.new(0,-2,0)
+		end
+	elseif chg.magnitude>1 then
+		rotorSpd(0.4)
+		chg=chg*0.9
+	else
+		rotorSpd(0.4)
+		chg=Vector3.new(0,1,0)
+	end
+	if w then
+		if inc<max_speed then
+			inc=inc+2
+		end
+		spd.velocity=chg+(engine.CFrame.lookVector+Vector3.new(0,0.3,0))*inc
+		gyro.cframe=mouse.Hit
+	elseif s then
+		if inc >-max_speed then
+			inc=inc-2
+		end
+		spd.velocity=chg+(engine.CFrame.lookVector-Vector3.new(0,0.3,0))*inc
+		gyro.cframe=mouse.Hit
+	else
+		inc=inc*0.9
+		spd.velocity=chg+engine.CFrame.lookVector*inc+Vector3.new(0,0,0)
+		gyro.cframe=mouse.Hit
+	end
+
+	if a then
+		if rot<math.pi/8 then
+			rot=rot+math.pi/20
+		end
