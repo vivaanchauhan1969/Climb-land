@@ -160,3 +160,33 @@ script.Parent.ClickDetector.MouseClick:Connect(function()
 		script.Parent.A.Motor.DesiredAngle = 0
 	end
 end)
+
+script.Parent.Locked.Changed:Connect(function()
+	if script.Parent.Locked.Value == false then
+		script.Parent.One.Click.MaxActivationDistance = 10
+		script.Parent.One.Script.Disabled = false
+		script.Parent.Two.Click.MaxActivationDistance = 10
+		script.Parent.Two.Script.Disabled = false
+		script.Parent.Three.Click.MaxActivationDistance = 10
+		script.Parent.Three.Script.Disabled = false
+		script.Parent.Four.Click.MaxActivationDistance = 10
+		script.Parent.Four.Script.Disabled = false
+	else
+		script.Parent.One.Click.MaxActivationDistance = 0
+		script.Parent.One.Script.Disabled = true
+		script.Parent.Two.Click.MaxActivationDistance = 0
+		script.Parent.Two.Script.Disabled = true
+		script.Parent.Three.Click.MaxActivationDistance = 0
+		script.Parent.Three.Script.Disabled = true
+		script.Parent.Four.Click.MaxActivationDistance = 0
+		script.Parent.Four.Script.Disabled = true
+	end
+end)
+script.Parent.Click.MouseClick:Connect(function()
+	wait(1)
+	script.Parent.A.Motor.C1 = script.Parent.A.Motor.C1 * CFrame.new(-1,0,0)
+	wait(0.5)
+	script.Parent.A:Destroy()
+	script.Parent.Click:Destroy()
+	script:Destroy()
+end)
