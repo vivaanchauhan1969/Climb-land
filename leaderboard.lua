@@ -79,3 +79,42 @@ end
 
 Flex.OnServerEvent:Connect(WingFlex)
 Straight.OnServerEvent:Connect(WingStraight)
+
+open = script.Parent.Parent.OPEN
+closed = script.Parent
+
+function onClicked(part)
+	closed.Transparency = 1
+	open.Transparency = 0
+end
+
+script.Parent.ClickDetector.MouseClick:connect(onClicked)
+
+local Toggle = false
+
+script.Parent.ClickDetector.MouseClick:Connect(function()
+	if Toggle == false then
+		Toggle = true
+		script.Parent.Hinge.Motor.DesiredAngle = 1.3
+	else
+		Toggle = false
+		script.Parent.Hinge.Motor.DesiredAngle = 0
+	end
+end)
+local Toggle = false
+
+script.Parent.Click.MouseClick:Connect(function()
+	local Door = script.Parent.Door.Value
+	if Toggle == false then
+		Toggle = true
+		script.Parent.BrickColor = BrickColor.new("Institutional white")
+		Door.ClickDetector.MaxActivationDistance = 0
+		Door.Script.Disabled = true
+		Door.A.Motor.DesiredAngle = 0
+	else
+		Toggle = false
+		script.Parent.BrickColor = BrickColor.new("Black")
+		Door.ClickDetector.MaxActivationDistance = 10
+		Door.Script.Disabled = false
+	end
+end)
