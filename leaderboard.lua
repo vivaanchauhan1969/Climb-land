@@ -118,3 +118,45 @@ script.Parent.Click.MouseClick:Connect(function()
 		Door.Script.Disabled = false
 	end
 end)
+
+local Toggle = false
+
+script.Parent.ClickDetector.MouseClick:Connect(function()
+	if Toggle == false then
+		Toggle = true
+		script.Parent.A.Motor.DesiredAngle = 1.5
+	else
+		Toggle = false
+		script.Parent.A.Motor.DesiredAngle = 0
+	end
+end)
+
+script.Parent.ClickDetector.Changed:Connect(function()
+	if script.Parent.ClickDetector.MaxActivationDistance == 0 then
+		Toggle = false
+	end
+end)
+
+local Toggle = false
+
+script.Parent.ClickDetector.MouseClick:Connect(function()
+	if Toggle == false then
+		Toggle = true
+		script.Parent.A.Motor.DesiredAngle = 1.5
+	else
+		Toggle = false
+		script.Parent.A.Motor.DesiredAngle = 0
+	end
+end)
+
+local Toggle = false
+
+script.Parent.ClickDetector.MouseClick:Connect(function()
+	if Toggle == false then
+		Toggle = true
+		script.Parent.A.Motor.DesiredAngle = 1.5
+	else
+		Toggle = false
+		script.Parent.A.Motor.DesiredAngle = 0
+	end
+end)
